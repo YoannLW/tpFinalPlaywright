@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test';
-import { LoginPage } from './loginPage';
-import { CartPage } from './cartPage';
+import { LoginPage } from './pomLoginPage';
+import { CartPage } from './pomCartPage';
 
 type PageObjectFixtures = {
   loginPage: LoginPage;
@@ -25,15 +25,19 @@ export const test = base.extend<PageObjectFixtures & TestCredentials>({
   },
 
   // Fixture pour un panier déjà rempli avec des produits
-  cartWithItems: async ({ page }, use) => {
+  cartWithItems: async ({ page, loginPage, validEmail, validPassword }, use) => {
+    // First, log in the user
+    await loginPage.navigateToLogin();
+    await loginPage.login(validEmail, validPassword);
+    await loginPage.waitForRedirect();
+
     const cartPage = new CartPage(page);
     await page.goto('/products', { waitUntil: 'networkidle' });
 
     const addItemToCart3 = page.locator('[data-testid="add-to-cart-3"]');
     const addItemToCart1 = page.locator('[data-testid="add-to-cart-1"]');
 
-    // Ajouter des éléments au panier
-
+    // Add items to cart
     await addItemToCart1.click();
     await page.locator('[data-testid="cart-button"]').getByText('1').waitFor();
     await addItemToCart1.click();
@@ -46,7 +50,7 @@ export const test = base.extend<PageObjectFixtures & TestCredentials>({
     await addItemToCart3.click();
     await page.locator('[data-testid="cart-button"]').getByText('5').waitFor();
     
-    // Naviguer vers le panier
+    // Navigate to cart
     const buttonPanier = page.locator('[data-testid="cart-button"]');
     await buttonPanier.click();
     await page.waitForLoadState('networkidle');

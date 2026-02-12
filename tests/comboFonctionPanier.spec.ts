@@ -2,7 +2,7 @@ import { test, expect } from './pages/fixtures';
 
 test.describe('Page Panier', () => {
   
-  test('Augmenter la quantité d\'un produit', async ({ cartWithItems }) => {
+  test('Augmenter contenu panier', async ({ cartWithItems }) => {
     const productId = '1';
     const initialQuantity = await cartWithItems.getQuantity(productId);
     
@@ -13,7 +13,7 @@ test.describe('Page Panier', () => {
     expect(newQuantity).toBe(initialQuantity + 1);
   });
 
-  test('Diminuer la quantité d\'un produit', async ({ cartWithItems }) => {
+  test('Diminuer contenu panier', async ({ cartWithItems }) => {
     const productId = '1';
     const initialQuantity = await cartWithItems.getQuantity(productId);
     
@@ -26,7 +26,7 @@ test.describe('Page Panier', () => {
     }
   });
 
-  test('Supprimer un article spécifique', async ({ cartWithItems }) => {
+  test('Supprimer un article contenu panier', async ({ cartWithItems }) => {
     const initialCount = await cartWithItems.getCartItemCount();
     const productId = '3';
     
@@ -37,7 +37,7 @@ test.describe('Page Panier', () => {
     expect(newCount).toBe(initialCount - 1);
   });
 
-  test('Vider le panier', async ({ cartWithItems }) => {
+  test('Vider contenu panier', async ({ cartWithItems }) => {
     await cartWithItems.clearCart();
     await cartWithItems.page.waitForTimeout(500);
     
