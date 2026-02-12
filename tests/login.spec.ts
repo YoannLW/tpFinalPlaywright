@@ -14,7 +14,9 @@ test.describe('Tests de connexion', () => {
     await expect(loginPage.termsText).toBeVisible();
   });
 
-  test('Connection w/ valid credentials', async ({ loginPage, validEmail, validPassword }) => {
+  test('Connection w/ valid credentials', { 
+    tag: ['@most-important'] },
+    async ({ loginPage, validEmail, validPassword }) => {
     await loginPage.login(validEmail, validPassword);
     await loginPage.waitForRedirect();
     const currentUrl = await loginPage.getCurrentUrl();
