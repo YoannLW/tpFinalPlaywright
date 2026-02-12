@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test';
-import { LoginPage } from './loginPage';
-import { CartPage } from './cartPage';
+import { LoginPage } from './pomLoginPage';
+import { CartPage } from './pomCartPage';
 
 type PageObjectFixtures = {
   loginPage: LoginPage;
